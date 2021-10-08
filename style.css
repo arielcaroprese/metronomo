@@ -19,11 +19,6 @@ main {
     height: 100vh;
 }
 
-.creditos {
-    position: absolute;
-    bottom: 16px;
-}
-
 .contenedorMetro {
     display: flex;
     flex-direction: column;
@@ -31,12 +26,12 @@ main {
     align-items: center;
     text-align: center;
     padding: 10vh 10vw;
+    margin: 0 16px;
     border-radius: 50px;
     background: #e0e0e0;
     box-shadow:  12px 12px 24px #bebebe,
                 -12px -12px 24px #ffffff;
     gap: 24px;
- 
 }
 
 .bpm {
@@ -45,7 +40,29 @@ main {
     justify-content: center;
 }
 
+.contenedorBPM {
+    border-radius: 10px;
+    background: #e0e0e0;
+    box-shadow: inset 4px 4px 6px #bebebe,
+            inset -4px -4px 6px #ffffff;
+    padding: 4px;
+    width: 220px;
+}
+
+.contenedorBeat {
+    border-radius: 10px;
+    background: #e0e0e0;
+    box-shadow: inset 4px 4px 6px #bebebe,
+            inset -4px -4px 6px #ffffff;
+    padding: 4px;
+    width: 48px;
+}
+
 .textoBPM {
+    font-size: 24px;
+}
+
+#numeroBPM {
     font-size: 56px;
 }
 
