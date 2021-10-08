@@ -83,14 +83,14 @@ const playClick = () => {
         mostrarConteo(conteo);
         click.play();;
         conteo = 1;
-    };
+    }
     }
 
 
 let intervalo = false;
 let play = false;
 
-function playStop() {
+const playStop = () => {
   if (!play) {
     intervalo = setInterval(playClick, 60000 / MetronomoActivo.tempo);
     play = true;
