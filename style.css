@@ -9,6 +9,7 @@
 
 body {
     background: #e0e0e0;
+    overflow: hidden;
 }
 
 main {
@@ -18,6 +19,8 @@ main {
     align-items: center;
     height: 100vh;
 }
+
+/* Estilos Metro */
 
 .contenedorMetro {
     display: flex;
@@ -49,13 +52,34 @@ main {
     width: 220px;
 }
 
-.contenedorBeat {
+#contenedorBeat {
     border-radius: 10px;
     background: #e0e0e0;
     box-shadow: inset 4px 4px 6px #bebebe,
             inset -4px -4px 6px #ffffff;
-    padding: 4px;
-    width: 48px;
+    padding: 0 4px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.puntoInactivo {
+    width: 18px;
+    height: 18px;
+    border-radius: 50px;
+    background: linear-gradient(145deg, #5d5d5d, #4e4e4e);
+    box-shadow:  3px 3px 6px #bebebe,
+                -3px -3px 6px #ffffff;
+}
+
+.puntoActivo {
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    background: linear-gradient(145deg, #888888, #808080);
+    box-shadow:  3px 3px 6px #bebebe,
+                -3px -3px 6px #ffffff;
 }
 
 .textoBPM {
@@ -92,7 +116,31 @@ main {
     height: 64px;
 }
 
+.botonesAvanzados {
+    padding-top: 24px;
+    display: flex;
+}
 
+#botonConfig {
+    min-width: 56px;
+    min-height: 36px;
+    border-radius: 50px;
+    background: #e0e0e0;
+    box-shadow:  8px 8px 16px #bebebe,
+             -8px -8px 16px #ffffff;
+    margin: 0 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+#botonConfig:hover {
+    border-radius: 50px;
+    background: linear-gradient(145deg, #cacaca, #f0f0f0);
+    box-shadow:  8px 8px 16px #bebebe,
+             -8px -8px 16px #ffffff;
+}
 
  /* estilos de ajuste de tempo */
 
@@ -156,3 +204,162 @@ input[type="range"]::-webkit-slider-thumb {
     font-size: 20px;
 }
 
+/* Estilos Config */
+
+.contenedorConfig {
+    width: 100vw;
+    height: 80vh;
+    border-radius: 36px 36px 0 0;
+    z-index: 999;
+    background: #f1f1f1;
+    padding: 48px;
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    justify-content: center;
+    display: none;
+    overflow: scroll;
+}
+
+#botonGuardar {
+    min-width: 56px;
+    min-height: 36px;
+    border-radius: 50px;
+    background: #e0e0e0;
+    box-shadow:  8px 8px 16px #bebebe,
+             -8px -8px 16px #ffffff;
+    margin: 0 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+}
+
+#botonGuardar:hover {
+    border-radius: 50px;
+    background: linear-gradient(145deg, #cacaca, #f0f0f0);
+    box-shadow:  8px 8px 16px #bebebe,
+             -8px -8px 16px #ffffff;
+}
+
+.contenedorCerrar {
+    display: flex;
+    justify-content: end;
+}
+
+#botonCerrar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50px;
+    background: #e0e0e0;
+    box-shadow:  8px 8px 16px #bebebe,
+             -8px -8px 16px #ffffff;
+    margin: 0 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+}
+
+#botonCerrar:hover {
+    border-radius: 50px;
+    background: linear-gradient(145deg, #cacaca, #f0f0f0);
+    box-shadow:  8px 8px 16px #bebebe,
+             -8px -8px 16px #ffffff;
+}
+
+.botonesConfig {
+    display: none;
+}
+
+/*Buscador*/
+
+.contenedorBusqueda {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+}
+
+#buscador {
+    display: flex;
+    justify-content: center;
+}
+
+.formBusqueda {
+    height: 80px;
+}
+
+#campoBusqueda {
+    border-radius: 10px;
+    background: #e0e0e0;
+    box-shadow: inset 4px 4px 6px #bebebe,
+            inset -4px -4px 6px #ffffff;
+    padding: 12px;
+    width: 220px;
+    border: none;
+}
+
+#botonBuscar {
+    min-width: 100px;
+    min-height: 36px;
+    border-radius: 50px;
+    background: #e0e0e0;
+    box-shadow:  8px 8px 16px #bebebe,
+             -8px -8px 16px #ffffff;
+    margin: 0 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    border: none;
+}
+
+#botonBuscar:hover {
+    border-radius: 50px;
+    background: linear-gradient(145deg, #cacaca, #f0f0f0);
+    box-shadow:  8px 8px 16px #bebebe,
+             -8px -8px 16px #ffffff;
+}
+
+.contenedorResultados {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.cardResultado {
+    width: 320px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    padding: 16px;
+    border-radius: 24px;
+    background: #e0e0e0;
+    box-shadow:  6px 6px 12px #bebebe,
+                -6px -6px 12px #ffffff;
+}
+
+.infoCard {
+    padding-left: 16px;
+    text-align: left;
+    display: flex;;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cover {
+    max-width: 90px;
+    border-radius: 20px;
+}
+
+.bpmCancion {
+    font-size: 32px;
+}
+
+.textoBPMCard {
+    font-size: 16px;
+}

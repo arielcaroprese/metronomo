@@ -15,13 +15,12 @@
     <main>
       <section class="contenedorMetro">
         <div>
-            <h1>Metrónomo</h1>
+            <h1>Metrónomo Online</h1>
         </div>
-        <div class="contenedorBeat">
-            <h2 id="contadorBeat">-</h2>
+        <div id="contenedorBeat">
         </div>
         <div class="contenedorBPM">
-            <p class="textoBPM"><span id="numeroBPM">140</span>BPM</p>
+            <p class="textoBPM"><span id="numeroBPM">-</span>BPM</p>
         </div>
         <div class="ajusteBPM">
             <div id="botonRestarBPM" class="bpm">
@@ -42,23 +41,46 @@
             <div>
                 <div>
                     <h4>Beat</h4>
-                    <h3 id="numeroBeat">4</h3>
+                    <h3 id="numeroBeat">-</h3>
                 </div>
             </div>
             <div id="botonSumarBeat" class="botonBeat">
                 <i class="fas fa-plus"></i>
             </div>
         </div>
-        <div class="bpm">
-            <div id="botonPlay" class="botonCircular">
+        <div id="botonPlay" class="botonCircular">
                 <i class="fas fa-play"></i>
+        </div>
+        <div class="botonesAvanzados">
+            <div id="botonConfig">
+                <i class="fas fa-search"></i>
+            </div>
+            <div id="botonGuardar">
+                <i class="fas fa-save"></i>
+               </div>
+        </div>
+    </section>
+    <section class="contenedorConfig">
+        <div class="contenedorCerrar">
+            <div id="botonCerrar">
+                <i class="fas fa-times"></i>
             </div>
         </div>
+        <div class="formBusqueda">
+            <form id="buscador" action="text">
+                <input type="text" name="" id="campoBusqueda" placeholder="Ingresá tu búsqueda">
+                <input type="button" value="Buscar" id="botonBuscar">
+            </form>
+        </div>
+        <section class="contenedorResultados">
+        </section>
     </section>
     <!-- <div class="creditos">
         <p>Desarrollado por Esteban Ariel Caroprese</p>
     </div> -->
     </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="./codigo.js"></script>
+    <script src="./buscador.js"></script>
   </body>
 </html>

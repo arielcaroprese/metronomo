@@ -7,6 +7,40 @@ const click = new Audio('click.mp3')
 
 let conteo = 1;
 
+//GET ELEMENTS
+
+// BPM
+// const tempoSlider = document.getElementById("slider");
+// const incrementarBPM = document.getElementById("botonSumarBPM");
+// const disminuirBPM = document.getElementById("botonRestarBPM");
+// const mostrarBPM = document.getElementById("numeroBPM");
+// BEAT
+// const incrementarBeat = document.getElementById("botonSumarBeat");
+// const disminuirBeat = document.getElementById("botonRestarBeat");
+// const numeroBeat = document.getElementById("numeroBeat");
+
+//FUNCIONES GLOBALES
+
+// const actualizarBPM = () => {
+//     mostrarBPM.innerHTML = MetronomoActivo.tempo;
+//     tempoSlider.value = MetronomoActivo.tempo;
+// }
+
+// const actualizarBeat = () => {
+//     numeroBeat.innerHTML = MetronomoActivo.beat;
+// }
+
+//actualizar bpm con jQuery
+
+const actualizarBPM = () => {
+    $("#numeroBPM").html(MetronomoActivo.tempo);
+    $("#tempoSlider").val = MetronomoActivo.tempo;
+}
+
+const actualizarBeat = () => {
+    $("#numeroBeat").html(MetronomoActivo.beat);
+}
+
 //función constructora del objeto metrónomo
 
 class Metronomo {
@@ -16,59 +50,121 @@ class Metronomo {
     }
 }
 
-//crear el metronomo
+//crear el metronomo - si está guardado se carga el guardado, sino crea uno genérico
 
-const MetronomoActivo = new Metronomo(140, 4);
+const metronomoGuardado = JSON.parse(localStorage.getItem("metronomoGuardado"));
+let MetronomoActivo = new Metronomo(140, 4);
+actualizarBPM();
+actualizarBeat();
 
-// interacción con el html
+if (metronomoGuardado != null) {
+    MetronomoActivo = new Metronomo(metronomoGuardado.tempo, metronomoGuardado.beat);
+    actualizarBPM();
+    actualizarBeat();
+}
 
-//BPM
+// EVENTOS DE BOTONES
 
-const tempoSlider = document.getElementById("slider");
-const incrementarBPM = document.getElementById("botonSumarBPM");
-const disminuirBPM = document.getElementById("botonRestarBPM");
-const mostrarBPM = document.getElementById("numeroBPM");
+// incrementarBPM.addEventListener('click', () => {
+//     if (MetronomoActivo.tempo >= 260) { return };
+//     MetronomoActivo.tempo ++;
+//     actualizarBPM();
+// })
 
-incrementarBPM.addEventListener('click', () => {
+
+// disminuirBPM.addEventListener('click', () => {
+//     if (MetronomoActivo.tempo <= 20) { return };
+//     MetronomoActivo.tempo --;
+//     actualizarBPM();
+// })
+
+// tempoSlider.addEventListener('input', () => {
+//     MetronomoActivo.tempo = tempoSlider.value;
+//     mostrarBPM.innerHTML = MetronomoActivo.tempo;
+// })
+
+// EVENTOS DE BOTONES CON JQUERY
+
+$("#botonSumarBPM").click(() => { 
     if (MetronomoActivo.tempo >= 260) { return };
     MetronomoActivo.tempo ++;
-    mostrarBPM.innerHTML = MetronomoActivo.tempo;
-    tempoSlider.value = MetronomoActivo.tempo;
-})
+    actualizarBPM(); 
+});
 
-disminuirBPM.addEventListener('click', () => {
-    if (MetronomoActivo.tempo <= 20) { return };
+$("#botonRestarBPM").click(() => { 
+    if (MetronomoActivo.tempo >= 260) { return };
     MetronomoActivo.tempo --;
-    mostrarBPM.innerHTML = MetronomoActivo.tempo;
-    tempoSlider.value = MetronomoActivo.tempo;
-})
+    actualizarBPM(); 
+});
 
-tempoSlider.addEventListener('input', () => {
-    MetronomoActivo.tempo = tempoSlider.value;
-    mostrarBPM.innerHTML = MetronomoActivo.tempo;
-})
+$("#slider").change(() => { 
+    MetronomoActivo.tempo = $("#slider").val();
+    $("#numeroBPM").html(MetronomoActivo.tempo);
+});
 
 //BEAT
 
-const incrementarBeat = document.getElementById("botonSumarBeat");
-const disminuirBeat = document.getElementById("botonRestarBeat");
-const numeroBeat = document.getElementById("numeroBeat");
+// función constructora de beats
 
-incrementarBeat.addEventListener('click', () => {
+beatArray = [];
+
+class Beat {
+    constructor (beat) {
+        this.numero = beat;
+        this.acento = false;
+    }
+}
+
+//generar beat iniciales
+
+for (let i = 1; i <= MetronomoActivo.beat; i++) {
+    generarDots = beatArray.push(new Beat(i))
+  }
+
+contenedorBeat = document.getElementById("contenedorBeat");
+
+// función para actualizar los beats del contador en el html
+
+const mostrarPuntosBeat = () => {
+    contenedorBeat.innerHTML = ``;   
+    for (let beat of beatArray) {
+        let punto = document.createElement("div");
+        punto.setAttribute("id", `beat${beat.numero}`)
+        punto.setAttribute("class", "puntoInactivo")
+        contenedorBeat.appendChild(punto);    
+    }
+}
+
+mostrarPuntosBeat();
+
+//ejecutar la función para mostrar los puntos de los beats
+
+$("#botonSumarBeat").click(() => { 
     if (MetronomoActivo.beat >= 12) { return };
     MetronomoActivo.beat ++;
-    numeroBeat.innerHTML = MetronomoActivo.beat;
-})
+    actualizarBeat();
+    generarDots = beatArray.push(new Beat(MetronomoActivo.beat))
+    mostrarPuntosBeat();
+});
 
-disminuirBeat.addEventListener('click', () => {
+$("#botonRestarBeat").click(() => { 
     if (MetronomoActivo.beat <= 2) { return };
     MetronomoActivo.beat --;
-    numeroBeat.innerHTML = MetronomoActivo.beat;
-})
+    actualizarBeat();
+    generarDots = beatArray.pop()
+    mostrarPuntosBeat();
+});
 
 const mostrarConteo = (conteo) => {
-    let contadorBeat = document.getElementById("contadorBeat");
-    contadorBeat.innerHTML = `${conteo}`
+    let beatActivo = document.getElementById(`beat${conteo}`);
+    beatActivo.setAttribute("class", "puntoActivo");
+    if (conteo >1) {
+        let beatInactivo = document.getElementById(`beat${conteo-1}`);
+        beatInactivo.setAttribute("class", "puntoInactivo") 
+    } else {
+        let beatInactivo = document.getElementById(`beat${MetronomoActivo.beat}`);
+        beatInactivo.setAttribute("class", "puntoInactivo") 
+    }
 }
 
 // funciones de reproducción
@@ -81,7 +177,7 @@ const playClick = () => {
     }
     else {
         mostrarConteo(conteo);
-        click.play();;
+        click.play();
         conteo = 1;
     }
     }
@@ -104,3 +200,26 @@ const playStop = () => {
 }
 
 botonPlay.addEventListener("click", playStop);
+
+//FUNCION GUARDAR METRÓNOMO
+
+const guardar = () => { 
+    const metronomoJSON = JSON.stringify(MetronomoActivo);
+    localStorage.setItem("metronomoGuardado", metronomoJSON);
+}
+
+botonGuardar.addEventListener("click", guardar);
+
+//ANIMACIONES jQuery
+
+$("#botonConfig").click(() => { 
+    $(".contenedorConfig").slideDown(700, () => {
+        $(".botonesConfig").fadeIn();
+    });
+});
+
+$("#botonCerrar").click(() => { 
+    $(".contenedorConfig").slideUp(700, () => {
+        $(".botonesConfig").fadeOut();
+    });
+});
