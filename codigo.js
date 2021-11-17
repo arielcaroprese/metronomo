@@ -17,6 +17,16 @@ class Metronomo {
     }
 }
 
+// CREA EL METRONOMO - Si está guardado se carga el guardado, sino crea uno genérico
+
+const metronomoGuardado = JSON.parse(localStorage.getItem("metronomoGuardado"));
+
+if (metronomoGuardado != null) {
+    MetronomoActivo = new Metronomo(metronomoGuardado.tempo, metronomoGuardado.beat);
+} else {
+    let MetronomoActivo = new Metronomo(140, 4);
+}
+
 // FUNCIONES
 
 // ACTUALIZAR BPM
@@ -31,20 +41,6 @@ const actualizarBPM = () => {
 const actualizarBeat = () => {
     $("#numeroBeat").html(MetronomoActivo.beat);
 }
-
-// EJECUCION
-
-// CREA EL METRONOMO - Si está guardado se carga el guardado, sino crea uno genérico
-
-const metronomoGuardado = JSON.parse(localStorage.getItem("metronomoGuardado"));
-
-if (metronomoGuardado != null) {
-    MetronomoActivo = new Metronomo(metronomoGuardado.tempo, metronomoGuardado.beat);
-} else {
-    let MetronomoActivo = new Metronomo(140, 4);
-}
-actualizarBPM();
-actualizarBeat();
 
 // ARRAY DE BEATS Y FUNCION CONSTRUCTORA DEL OBJETO BEAT
 
@@ -76,6 +72,8 @@ const mostrarPuntosBeat = () => {
     }
 }
 
+actualizarBPM();
+actualizarBeat();
 mostrarPuntosBeat();
 
 // FUNCION PARA MOSTRAR EL BEAT ACTIVO EN LA REPRODUCCION
