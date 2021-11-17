@@ -24,7 +24,7 @@ const metronomoGuardado = JSON.parse(localStorage.getItem("metronomoGuardado"));
 if (metronomoGuardado != null) {
     MetronomoActivo = new Metronomo(metronomoGuardado.tempo, metronomoGuardado.beat);
 } else {
-    let MetronomoActivo = new Metronomo(140, 4);
+    MetronomoActivo = new Metronomo(140, 4);
 }
 
 // FUNCIONES
