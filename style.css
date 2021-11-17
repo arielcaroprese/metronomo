@@ -17,10 +17,8 @@ main {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: 95vh;
 }
-
-/* Estilos Metro */
 
 .contenedorMetro {
     display: flex;
@@ -31,10 +29,18 @@ main {
     padding: 10vh 10vw;
     margin: 0 16px;
     border-radius: 50px;
+    gap: 16px;
     background: #e0e0e0;
     box-shadow:  12px 12px 24px #bebebe,
                 -12px -12px 24px #ffffff;
-    gap: 24px;
+}
+
+.creditos {
+    height: 5vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .bpm {
@@ -142,8 +148,6 @@ main {
              -8px -8px 16px #ffffff;
 }
 
- /* estilos de ajuste de tempo */
-
  .ajusteBPM {
     display: flex;
 }
@@ -169,13 +173,13 @@ input[type="range"]::-webkit-slider-thumb {
                 -3px -3px 6px #ffffff;
 }
 
-.botonBeat {
+.botonChico {
     width: 24px;
     height: 24px;
     border-radius: 50px;
     background: #e0e0e0;
     box-shadow:  8px 8px 16px #bebebe,
-             -8px -8px 16px #ffffff;
+                -8px -8px 16px #ffffff;
     margin: 0 24px;
     display: flex;
     justify-content: center;
@@ -183,7 +187,7 @@ input[type="range"]::-webkit-slider-thumb {
     font-size: 12px;
 }
 
-.botonBeat:hover {
+.botonChico:hover {
     border-radius: 50px;
     background: linear-gradient(145deg, #cacaca, #f0f0f0);
     box-shadow:  8px 8px 16px #bebebe,
@@ -204,7 +208,7 @@ input[type="range"]::-webkit-slider-thumb {
     font-size: 20px;
 }
 
-/* Estilos Config */
+/* Estilos de la configuración */
 
 .contenedorConfig {
     width: 100vw;
@@ -272,7 +276,7 @@ input[type="range"]::-webkit-slider-thumb {
     display: none;
 }
 
-/*Buscador*/
+/*Estilos del buscador*/
 
 .contenedorBusqueda {
     display: flex;
@@ -333,9 +337,11 @@ input[type="range"]::-webkit-slider-thumb {
 .cardResultado {
     width: 320px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     text-align: center;
+    gap: 8px;
     padding: 16px;
     border-radius: 24px;
     background: #e0e0e0;
@@ -343,23 +349,41 @@ input[type="range"]::-webkit-slider-thumb {
                 -6px -6px 12px #ffffff;
 }
 
-.infoCard {
-    padding-left: 16px;
-    text-align: left;
-    display: flex;;
-    flex-direction: column;
+.bpmCard {
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
+    gap: 8px
+}
+
+.bpmCard .botonCircular {
+    margin: 0px;
 }
 
 .cover {
     max-width: 90px;
+    max-height: 90px;
     border-radius: 20px;
 }
 
 .bpmCancion {
     font-size: 32px;
+    display: inline;
 }
 
 .textoBPMCard {
     font-size: 16px;
+}
+
+/* Dark Mode */
+
+.darkMode {
+    background: #2b2b2b;
+}
+
+.darkMode .contenedorMetro {
+    border-radius: 50px;
+    background: #2b2b2b;
+    box-shadow:  7px 7px 14px #252525,
+                 -7px -7px 14px #313131;
 }

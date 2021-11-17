@@ -1,48 +1,15 @@
-
-// sonidos
-
-const click = new Audio('click.mp3')
-
-//Variables globales
+//VARIABLES GLOBALES
 
 let conteo = 1;
+let intervalo;
+let play = false;
 
-//GET ELEMENTS
+// SONIDOS
 
-// BPM
-// const tempoSlider = document.getElementById("slider");
-// const incrementarBPM = document.getElementById("botonSumarBPM");
-// const disminuirBPM = document.getElementById("botonRestarBPM");
-// const mostrarBPM = document.getElementById("numeroBPM");
-// BEAT
-// const incrementarBeat = document.getElementById("botonSumarBeat");
-// const disminuirBeat = document.getElementById("botonRestarBeat");
-// const numeroBeat = document.getElementById("numeroBeat");
+const click = new Audio('click.mp3')
+const acento = new Audio('acento.mp3')
 
-//FUNCIONES GLOBALES
-
-// const actualizarBPM = () => {
-//     mostrarBPM.innerHTML = MetronomoActivo.tempo;
-//     tempoSlider.value = MetronomoActivo.tempo;
-// }
-
-// const actualizarBeat = () => {
-//     numeroBeat.innerHTML = MetronomoActivo.beat;
-// }
-
-//actualizar bpm con jQuery
-
-const actualizarBPM = () => {
-    $("#numeroBPM").html(MetronomoActivo.tempo);
-    $("#tempoSlider").val = MetronomoActivo.tempo;
-}
-
-const actualizarBeat = () => {
-    $("#numeroBeat").html(MetronomoActivo.beat);
-}
-
-//función constructora del objeto metrónomo
-
+// FUNCION CONSTRUCTORA DEL OBJETO METRONOMO
 class Metronomo {
     constructor (tempo, beat) {
         this.tempo = tempo;
@@ -50,64 +17,38 @@ class Metronomo {
     }
 }
 
-//crear el metronomo - si está guardado se carga el guardado, sino crea uno genérico
+// FUNCIONES
+
+// ACTUALIZAR BPM
+
+const actualizarBPM = () => {
+    $("#numeroBPM").html(MetronomoActivo.tempo);
+    $("#tempoSlider").val = MetronomoActivo.tempo;
+}
+
+// ACTUALIZAR BEAT
+
+const actualizarBeat = () => {
+    $("#numeroBeat").html(MetronomoActivo.beat);
+}
+
+// EJECUCION
+
+// CREA EL METRONOMO - Si está guardado se carga el guardado, sino crea uno genérico
 
 const metronomoGuardado = JSON.parse(localStorage.getItem("metronomoGuardado"));
-let MetronomoActivo = new Metronomo(140, 4);
-actualizarBPM();
-actualizarBeat();
 
 if (metronomoGuardado != null) {
     MetronomoActivo = new Metronomo(metronomoGuardado.tempo, metronomoGuardado.beat);
-    actualizarBPM();
-    actualizarBeat();
+} else {
+    let MetronomoActivo = new Metronomo(140, 4);
 }
+actualizarBPM();
+actualizarBeat();
 
-// EVENTOS DE BOTONES
-
-// incrementarBPM.addEventListener('click', () => {
-//     if (MetronomoActivo.tempo >= 260) { return };
-//     MetronomoActivo.tempo ++;
-//     actualizarBPM();
-// })
-
-
-// disminuirBPM.addEventListener('click', () => {
-//     if (MetronomoActivo.tempo <= 20) { return };
-//     MetronomoActivo.tempo --;
-//     actualizarBPM();
-// })
-
-// tempoSlider.addEventListener('input', () => {
-//     MetronomoActivo.tempo = tempoSlider.value;
-//     mostrarBPM.innerHTML = MetronomoActivo.tempo;
-// })
-
-// EVENTOS DE BOTONES CON JQUERY
-
-$("#botonSumarBPM").click(() => { 
-    if (MetronomoActivo.tempo >= 260) { return };
-    MetronomoActivo.tempo ++;
-    actualizarBPM(); 
-});
-
-$("#botonRestarBPM").click(() => { 
-    if (MetronomoActivo.tempo >= 260) { return };
-    MetronomoActivo.tempo --;
-    actualizarBPM(); 
-});
-
-$("#slider").change(() => { 
-    MetronomoActivo.tempo = $("#slider").val();
-    $("#numeroBPM").html(MetronomoActivo.tempo);
-});
-
-//BEAT
-
-// función constructora de beats
+// ARRAY DE BEATS Y FUNCION CONSTRUCTORA DEL OBJETO BEAT
 
 beatArray = [];
-
 class Beat {
     constructor (beat) {
         this.numero = beat;
@@ -115,50 +56,34 @@ class Beat {
     }
 }
 
-//generar beat iniciales
+// generar beat iniciales
 
 for (let i = 1; i <= MetronomoActivo.beat; i++) {
     generarDots = beatArray.push(new Beat(i))
   }
 
-contenedorBeat = document.getElementById("contenedorBeat");
+// FUNCION PARA MOSTRAR LOS DOTS DE BEAT EN LA UI
 
-// función para actualizar los beats del contador en el html
+contenedorBeat = document.getElementById("contenedorBeat");
 
 const mostrarPuntosBeat = () => {
     contenedorBeat.innerHTML = ``;   
     for (let beat of beatArray) {
         let punto = document.createElement("div");
-        punto.setAttribute("id", `beat${beat.numero}`)
-        punto.setAttribute("class", "puntoInactivo")
+        punto.setAttribute("id", `beat${beat.numero}`);
+        punto.setAttribute("class", "puntoInactivo");
         contenedorBeat.appendChild(punto);    
     }
 }
 
 mostrarPuntosBeat();
 
-//ejecutar la función para mostrar los puntos de los beats
-
-$("#botonSumarBeat").click(() => { 
-    if (MetronomoActivo.beat >= 12) { return };
-    MetronomoActivo.beat ++;
-    actualizarBeat();
-    generarDots = beatArray.push(new Beat(MetronomoActivo.beat))
-    mostrarPuntosBeat();
-});
-
-$("#botonRestarBeat").click(() => { 
-    if (MetronomoActivo.beat <= 2) { return };
-    MetronomoActivo.beat --;
-    actualizarBeat();
-    generarDots = beatArray.pop()
-    mostrarPuntosBeat();
-});
+// FUNCION PARA MOSTRAR EL BEAT ACTIVO EN LA REPRODUCCION
 
 const mostrarConteo = (conteo) => {
     let beatActivo = document.getElementById(`beat${conteo}`);
     beatActivo.setAttribute("class", "puntoActivo");
-    if (conteo >1) {
+    if (conteo > 1) {
         let beatInactivo = document.getElementById(`beat${conteo-1}`);
         beatInactivo.setAttribute("class", "puntoInactivo") 
     } else {
@@ -167,37 +92,47 @@ const mostrarConteo = (conteo) => {
     }
 }
 
-// funciones de reproducción
+// FUNCION DE REPRODUCCIÓN
 
 const playClick = () => {
-    if (conteo < MetronomoActivo.beat) {
+    if (conteo === 1) {
         mostrarConteo(conteo);
-        click.play();;
+        acento.play();
         conteo++;
     }
     else {
         mostrarConteo(conteo);
         click.play();
-        conteo = 1;
+        conteo++;
+        if (conteo > MetronomoActivo.beat) {
+            conteo = 1;
+        }  
     }
-    }
+}
 
+//FUNCIONES DE INTERVALO
 
-let intervalo = false;
-let play = false;
-
-const playStop = () => {
-  if (!play) {
+const funcionPlay = () => {
+    clearInterval(intervalo);
     intervalo = setInterval(playClick, 60000 / MetronomoActivo.tempo);
     play = true;
-    botonPlay.innerHTML = '<i class="fas fa-pause"></i>';
-  }
-  else {
+};
+
+const funcionStop = () => {
     clearInterval(intervalo);
     play = false;
-    botonPlay.innerHTML = '<i class="fas fa-play"></i>';
-  }
-}
+};
+
+const playStop = () => {
+    if (!play) {
+        funcionPlay();
+        botonPlay.innerHTML = '<i class="fas fa-pause"></i>';
+    }
+    else {
+        funcionStop();
+        botonPlay.innerHTML = '<i class="fas fa-play"></i>';
+    }
+};
 
 botonPlay.addEventListener("click", playStop);
 
@@ -206,11 +141,63 @@ botonPlay.addEventListener("click", playStop);
 const guardar = () => { 
     const metronomoJSON = JSON.stringify(MetronomoActivo);
     localStorage.setItem("metronomoGuardado", metronomoJSON);
-}
+};
+
+// EVENTOS
+
+// EVENTOS BPM
+
+$("#botonSumarBPM").click(() => { 
+    if (MetronomoActivo.tempo >= 260) { return };
+    MetronomoActivo.tempo ++;
+    actualizarBPM();
+    if (play) {
+        funcionPlay();
+    }
+});
+
+$("#botonRestarBPM").click(() => { 
+    if (MetronomoActivo.tempo <= 20) { return };
+    MetronomoActivo.tempo --;
+    actualizarBPM(); 
+    if (play) {
+        funcionPlay();
+    }
+});
+
+$("#slider").change(() => { 
+    MetronomoActivo.tempo = $("#slider").val();
+    $("#numeroBPM").html(MetronomoActivo.tempo);
+    if (play) {
+        funcionPlay();
+    }
+});
+
+// EVENTOS BEATS 
+
+$("#botonSumarBeat").click(() => { 
+    if (MetronomoActivo.beat >= 12) { return };
+    MetronomoActivo.beat ++;
+    actualizarBeat();
+    generarDots = beatArray.push(new Beat(MetronomoActivo.beat));
+    mostrarPuntosBeat();
+    conteo = 1;
+});
+
+$("#botonRestarBeat").click(() => { 
+    if (MetronomoActivo.beat <= 2) { return };
+    MetronomoActivo.beat --;
+    actualizarBeat();
+    generarDots = beatArray.pop()
+    mostrarPuntosBeat();
+    conteo = 1;
+});
+
+// EVENTO GUARDAR METRONOMO
 
 botonGuardar.addEventListener("click", guardar);
 
-//ANIMACIONES jQuery
+// ANIMACIONES
 
 $("#botonConfig").click(() => { 
     $(".contenedorConfig").slideDown(700, () => {
@@ -223,3 +210,51 @@ $("#botonCerrar").click(() => {
         $(".botonesConfig").fadeOut();
     });
 });
+
+// BUSCADOR
+
+let busqueda;
+let id_track;
+
+const buscar = () => {
+    busqueda = $("#campoBusqueda").val();
+    let URL_API = `https://api.happi.dev/v1/music?apikey=fb54fdT6RON3uTzQLFBEfDtkF4PLKqYDfdFEZHgWyCzo6ZbeaD9VwIjQ&limit=12&q=${busqueda}`;
+    $(".cardResultado").remove();
+    $.get(URL_API, (respuesta, estado) => {
+        if (estado === "success") {
+            let canciones = respuesta.result;
+            for (const cancion of canciones) {
+                $(".contenedorResultados").append(`
+                <div class="cardResultado">
+                    <img src="${cancion.cover}" alt="" class="cover"> 
+                    <div>
+                        <h3 class="titulo">${cancion.track}</h3>
+                        <h4 class="banda">${cancion.artist}</h4>
+                    </div>
+                    <div class="bpmCard">
+                        <p class="bpmCancion">${cancion.bpm}<span class="textoBPMCard">bpm</span></p>
+                        <div id="${cancion.id_track}" class="botonCircular cargarBPM">
+                            <i class="fas fa-arrow-up"></i>
+                        </div>
+                    </div>          
+                </div>`);
+                id_track = cancion.id_track; 
+            }
+        }
+    }) 
+};
+
+$("#botonBuscar").on("click", () => {
+    buscar();
+});
+
+$("#campoBusqueda").on('keypress',function(e) {
+    if(e.which == 13) {
+        e.preventDefault();
+        buscar();
+    }
+});
+
+
+
+
