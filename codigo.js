@@ -231,9 +231,6 @@ const buscar = () => {
                     </div>
                     <div class="bpmCard">
                         <p class="bpmCancion">${cancion.bpm}<span class="textoBPMCard">bpm</span></p>
-                        <div id="${cancion.id_track}" class="botonCircular cargarBPM">
-                            <i class="fas fa-arrow-up"></i>
-                        </div>
                     </div>          
                 </div>`);
                 id_track = cancion.id_track; 
